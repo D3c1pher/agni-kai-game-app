@@ -35,6 +35,6 @@ export const FIRE_MASTER_PATTERNS = [
   {
     id: 'false-spark',
     name: 'False Spark',
-    moves: ['Strike', 'Charge', 'Guard', 'Recover'],
+    moves: ['Strike', 'Charge', 'Recover', 'Guard'],
   },
 ] as const satisfies readonly FireMasterPattern[]
