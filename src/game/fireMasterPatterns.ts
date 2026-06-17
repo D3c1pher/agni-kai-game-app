@@ -1,40 +1,36 @@
-import type { FireMasterAction } from './agniKaiRules'
+import type { FireMasterPattern } from './types'
 
-export type FireMasterPattern = {
-  id: string
-  name: string
-  moves: readonly FireMasterAction[]
-}
+export type { FireMasterPattern } from './types'
 
 export const FIRE_MASTER_PATTERNS = [
   {
     id: 'relentless-flame',
     name: 'Relentless Flame',
-    moves: ['Strike', 'Strike', 'Guard', 'Strike'],
+    moves: ['Strike', 'Guard', 'Strike', 'Guard', 'Strike'],
   },
   {
     id: 'breathing-ember',
     name: 'Breathing Ember',
-    moves: ['Strike', 'Recover', 'Strike', 'Guard'],
+    moves: ['Guard', 'Recover', 'Strike', 'Guard', 'Strike'],
   },
   {
     id: 'iron-stance',
     name: 'Iron Stance',
-    moves: ['Guard', 'Strike', 'Guard', 'Recover'],
+    moves: ['Guard', 'Strike', 'Guard', 'Strike', 'Recover'],
   },
   {
     id: 'burning-rhythm',
     name: 'Burning Rhythm',
-    moves: ['Strike', 'Guard', 'Strike', 'Recover'],
+    moves: ['Guard', 'Charge', 'Strike', 'Recover', 'Strike'],
   },
   {
     id: 'gathering-storm',
     name: 'Gathering Storm',
-    moves: ['Strike', 'Charge', 'Lightning', 'Guard'],
+    moves: ['Strike', 'Charge', 'Lightning', 'Recover', 'Guard'],
   },
   {
     id: 'false-spark',
     name: 'False Spark',
-    moves: ['Strike', 'Charge', 'Recover', 'Guard'],
+    moves: ['Strike', 'Charge', 'Recover', 'Guard', 'Strike'],
   },
 ] as const satisfies readonly FireMasterPattern[]
