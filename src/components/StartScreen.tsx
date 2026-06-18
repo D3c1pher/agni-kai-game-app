@@ -1,3 +1,6 @@
+import { useRef, useState } from 'react'
+import { HowToPlayModal } from './HowToPlayModal'
+
 type StartScreenProps = {
   challengerInput: string
   challengerMaxHealthInput: string
@@ -13,6 +16,14 @@ type StartScreenProps = {
 }
 
 export function StartScreen(props: StartScreenProps) {
+  const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false)
+  const howToPlayButtonRef = useRef<HTMLButtonElement>(null)
+
+  function closeHowToPlay() {
+    setIsHowToPlayOpen(false)
+    window.setTimeout(() => howToPlayButtonRef.current?.focus(), 0)
+  }
+
   return (
     <main className="min-h-screen bg-[#f6f7fb] px-5 py-8 text-slate-950">
       <section className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-4xl flex-col justify-center">
@@ -117,6 +128,14 @@ export function StartScreen(props: StartScreenProps) {
           >
             Play
           </button>
+          <button
+            className="mt-3 w-full rounded-md border border-slate-300 bg-white px-4 py-3 text-base font-semibold text-slate-700 transition hover:border-red-300 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-100"
+            ref={howToPlayButtonRef}
+            type="button"
+            onClick={() => setIsHowToPlayOpen(true)}
+          >
+            How to Play
+          </button>
           {props.storageWarning ? (
             <p className="mt-4 text-sm leading-6 text-amber-700">
               {props.storageWarning} Start a new duel to replace it.
@@ -124,6 +143,9 @@ export function StartScreen(props: StartScreenProps) {
           ) : null}
         </div>
       </section>
+      {isHowToPlayOpen ? (
+        <HowToPlayModal onClose={closeHowToPlay} />
+      ) : null}
     </main>
   )
 }

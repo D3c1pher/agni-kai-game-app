@@ -40,6 +40,40 @@ body {
   animation: agni-read-reveal 650ms ease-out;
 }
 
+.agni-how-to-play-dialog {
+  width: 100vw;
+  max-width: none;
+  height: 100vh;
+  max-height: none;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  padding: 1rem;
+}
+
+.agni-how-to-play-dialog[open] .agni-how-to-play-panel {
+  animation: agni-modal-pop 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.agni-how-to-play-dialog[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agni-how-to-play-dialog[open]::backdrop {
+  animation: agni-backdrop-in 180ms ease-out both;
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.agni-how-to-play-dialog.is-closing .agni-how-to-play-panel {
+  animation: agni-modal-close 160ms ease-in both;
+}
+
+.agni-how-to-play-dialog.is-closing::backdrop {
+  animation: agni-backdrop-out 160ms ease-in both;
+}
+
 @keyframes agni-hit-flash {
   0% {
     box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.55);
@@ -126,13 +160,57 @@ body {
   }
 }
 
+@keyframes agni-modal-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes agni-modal-close {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.97) translateY(8px);
+  }
+}
+
+@keyframes agni-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes agni-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .agni-hit-flash,
   .agni-hit-shake,
   .agni-guard-pulse,
   .agni-charge-glow,
   .agni-recover-pulse,
-  .agni-read-reveal {
+  .agni-read-reveal,
+  .agni-how-to-play-dialog[open] .agni-how-to-play-panel,
+  .agni-how-to-play-dialog[open]::backdrop,
+  .agni-how-to-play-dialog.is-closing .agni-how-to-play-panel,
+  .agni-how-to-play-dialog.is-closing::backdrop {
     animation: none;
   }
 }
