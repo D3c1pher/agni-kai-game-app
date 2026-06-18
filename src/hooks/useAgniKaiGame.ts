@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import {
+  DEFAULT_CHALLENGER_COUNT,
   DEFAULT_CHALLENGER_MAX_HEALTH,
   DEFAULT_FIRE_MASTER_HEALTH_ADDITION,
   DEFAULT_FIRE_MASTER_HEALTH_MULTIPLIER,
@@ -84,7 +85,9 @@ export function useAgniKaiGame(): AgniKaiGameViewModel {
   const [storageWarning, setStorageWarning] = useState<string | null>(
     initialGame.storageWarning,
   )
-  const [challengerInput, setChallengerInput] = useState('')
+  const [challengerInput, setChallengerInput] = useState(
+    String(DEFAULT_CHALLENGER_COUNT),
+  )
   const [challengerMaxHealthInput, setChallengerMaxHealthInput] = useState(
     String(DEFAULT_CHALLENGER_MAX_HEALTH),
   )
