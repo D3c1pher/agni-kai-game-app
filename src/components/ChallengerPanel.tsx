@@ -14,6 +14,7 @@ type ChallengerPanelProps = {
   challenger: Challenger
   recentEvents: TurnEvent[]
   selectedActions: Partial<ChallengerActionSelections>
+  isDisabled?: boolean
   onActionChange: (challengerId: number, action: ChallengerAction) => void
 }
 
@@ -65,6 +66,7 @@ export function ChallengerPanel(props: ChallengerPanelProps) {
         <select
           className="agni-select mt-1.5 w-full px-2 py-1.5 text-sm"
           value={selectedAction}
+          disabled={props.isDisabled}
           onChange={(event) =>
             props.onActionChange(
               props.challenger.id,

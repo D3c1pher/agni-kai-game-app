@@ -35,8 +35,10 @@ export function StartScreen(props: StartScreenProps) {
 
   return (
     <main className="agni-page min-h-dvh px-4 py-6 sm:px-5 sm:py-8">
-      <section className="mx-auto flex min-h-[calc(100dvh-3rem)] max-w-4xl flex-col justify-center sm:min-h-[calc(100dvh-4rem)]">
-        <div className="max-w-2xl">
+      <section className="mx-auto flex min-h-[calc(100dvh-3rem)] max-w-6xl flex-col justify-center sm:min-h-[calc(100dvh-4rem)]">
+        <div className="grid items-start gap-7 lg:grid-cols-[minmax(0,3fr)_minmax(18rem,2fr)] lg:gap-10">
+          <div>
+            <div className="max-w-2xl">
           <div className="flex items-center gap-4">
             <FlameEmblem className="h-16 w-16 shrink-0 drop-shadow-[0_4px_0_#0f0704] sm:h-20 sm:w-20" />
             <div>
@@ -49,9 +51,9 @@ export function StartScreen(props: StartScreenProps) {
           <p className="mt-4 max-w-xl text-base leading-7 text-[var(--agni-parchment-muted)] sm:mt-5 sm:text-lg sm:leading-8">
             Initiate a duel against the Fire Master.
           </p>
-        </div>
+            </div>
 
-        <div className="agni-panel mt-7 max-w-xl p-4 sm:mt-10 sm:p-6">
+            <div className="agni-panel mt-7 max-w-xl p-4 sm:mt-10 sm:p-6">
           <div className="grid gap-5 sm:grid-cols-2">
             <label
               className="block text-sm font-semibold uppercase tracking-wide text-[var(--agni-ink)]"
@@ -160,6 +162,22 @@ export function StartScreen(props: StartScreenProps) {
               {props.storageWarning} Start a new duel to replace it.
             </p>
           ) : null}
+            </div>
+          </div>
+
+          <aside className="agni-panel p-5 sm:p-6 lg:mt-24" aria-labelledby="developer-update-title">
+            <p className="agni-kicker">From the Developer</p>
+            <h2
+              className="agni-display mt-3 text-3xl text-[var(--agni-rust-dark)]"
+              id="developer-update-title"
+            >
+              Developer Update
+            </h2>
+            <p className="mt-5 text-base leading-7 text-[var(--agni-ink)]">
+              This game is dedicated to all the Campers who joined and participated in the
+              Thrive As One YM Camp.
+            </p>
+          </aside>
         </div>
       </section>
       {isFireMasterMessageOpen ? (

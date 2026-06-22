@@ -1,20 +1,105 @@
+import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { hasReadBlockedEvent, hasReadEvent } from '../game/turnEvents'
-import type { ActiveAgniKaiGameViewModel } from '../hooks/useAgniKaiGame'
+import type {
+  ChallengerAction,
+  GameStatus,
+  TurnEvent,
+} from '../game/agniKaiRules'
+import type {
+  ActiveAgniKaiGameViewModel,
+  ResolvedTurnPresentation,
+} from '../hooks/useAgniKaiGame'
 import { ChallengerPanel } from './ChallengerPanel'
 import { FireMasterPanel } from './FireMasterPanel'
 import { ReadResultsPanel } from './ReadResultsPanel'
 import { RosterPanel } from './RosterPanel'
 import { TurnLogPanel } from './TurnLogPanel'
 import { FlameEmblem } from './ui/FlameEmblem'
+import { DuelTransitionOverlay } from './DuelTransitionOverlay'
+
+const TRANSITION_DURATION_MS = 10000
+const REDUCED_MOTION_TRANSITION_DURATION_MS = 2000
+
+type DuelTransitionPhase = 'actions' | 'clash' | 'result'
+
+type DuelTransitionSequence = {
+  phase: DuelTransitionPhase
+  presentation: ResolvedTurnPresentation
+}
 
 type GameScreenProps = {
   game: ActiveAgniKaiGameViewModel
 }
 
 export function GameScreen(props: GameScreenProps) {
+  const [transition, setTransition] = useState<DuelTransitionSequence | null>(
+    null,
+  )
+  const [gameOverStatus, setGameOverStatus] = useState<GameStatus | null>(null)
+  const isTransitioning = props.game.isOpeningDuel || transition !== null
   const readFeedbackClass = hasReadEvent(props.game.gameState.recentEvents)
     ? 'agni-read-reveal'
     : ''
+
+  const finishTransition = useCallback(() => {
+    if (!transition) {
+      return
+    }
+
+    const status = transition.presentation.resolvedGameState.status
+    setTransition(null)
+
+    if (status !== 'playing') {
+      setGameOverStatus(status)
+    }
+  }, [transition])
+
+  const advanceTransition = useCallback(() => {
+    setTransition((currentTransition) => {
+      if (!currentTransition) {
+        return null
+      }
+
+      if (currentTransition.phase === 'actions') {
+        return { ...currentTransition, phase: 'clash' }
+      }
+
+      if (currentTransition.phase === 'clash') {
+        return { ...currentTransition, phase: 'result' }
+      }
+
+      const status = currentTransition.presentation.resolvedGameState.status
+      if (status !== 'playing') {
+        setGameOverStatus(status)
+      }
+
+      return null
+    })
+  }, [])
+
+  useEffect(() => {
+    if (!transition) {
+      return
+    }
+
+    const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      ? REDUCED_MOTION_TRANSITION_DURATION_MS
+      : TRANSITION_DURATION_MS
+    const timeoutId = window.setTimeout(advanceTransition, delay)
+
+    return () => window.clearTimeout(timeoutId)
+  }, [advanceTransition, transition])
+
+  const confirmTurn = () => {
+    if (isTransitioning) {
+      return
+    }
+
+    const presentation = props.game.confirmTurn()
+    if (presentation) {
+      setTransition({ phase: 'actions', presentation })
+    }
+  }
 
   return (
     <main className="agni-page min-h-dvh overflow-x-hidden px-3 py-3 sm:px-6 sm:py-4 lg:px-8 xl:h-dvh xl:overflow-hidden xl:py-2">
@@ -35,6 +120,7 @@ export function GameScreen(props: GameScreenProps) {
             </div>
             <button
               className="agni-button-secondary w-full px-3 py-1.5 text-sm md:w-auto"
+              disabled={isTransitioning}
               type="button"
               onClick={props.game.resetGame}
             >
@@ -60,9 +146,9 @@ export function GameScreen(props: GameScreenProps) {
               </div>
               <button
                 className="agni-button-primary w-full px-3 py-1.5 text-sm md:w-auto"
-                disabled={!props.game.isTurnReady}
+                disabled={!props.game.isTurnReady || isTransitioning}
                 type="button"
-                onClick={props.game.confirmTurn}
+                onClick={confirmTurn}
               >
                 Confirm actions
               </button>
@@ -72,6 +158,7 @@ export function GameScreen(props: GameScreenProps) {
               {props.game.activeChallengers.map((challenger) => (
                 <ChallengerPanel
                   challenger={challenger}
+                  isDisabled={isTransitioning}
                   key={challenger.id}
                   recentEvents={props.game.gameState.recentEvents}
                   selectedActions={props.game.selectedActions}
@@ -103,8 +190,217 @@ export function GameScreen(props: GameScreenProps) {
           <TurnLogPanel entries={props.game.gameState.turnLog} />
         </section>
       </section>
+
+      {props.game.isOpeningDuel ? (
+        <DuelTransitionOverlay
+          eyebrow="The arena is ready"
+          primaryActionLabel="Begin Duel"
+          title="Duel Begins"
+          onAdvance={props.game.acknowledgeOpeningDuel}
+        >
+          <strong className="text-amber-200">
+            {props.game.gameState.challengers.length} Challengers
+          </strong>{' '}
+          face a <strong className="text-red-400">Fire Master</strong> with{' '}
+          {props.game.gameState.fireMaster.maxHealth} health.
+        </DuelTransitionOverlay>
+      ) : null}
+
+      {transition ? (
+        <TurnTransitionOverlay
+          transition={transition}
+          onAdvance={advanceTransition}
+          onSkip={finishTransition}
+        />
+      ) : null}
+
+      {gameOverStatus ? (
+        <DuelTransitionOverlay
+          eyebrow="Duel concluded"
+          primaryActionLabel="New Duel"
+          secondaryActionLabel="Review Battlefield"
+          title={
+            gameOverStatus === 'won'
+              ? 'Challengers Win'
+              : 'Fire Master Wins'
+          }
+          onAdvance={props.game.resetGame}
+          onSecondaryAction={() => setGameOverStatus(null)}
+        >
+          {gameOverStatus === 'won' ? (
+            <>
+              <strong className="text-red-400">The Fire Master</strong> has
+              been reduced to <strong className="text-red-300">0 health</strong>.
+            </>
+          ) : (
+            <>
+              All <strong className="text-amber-200">Challengers</strong> have
+              fallen.
+            </>
+          )}
+        </DuelTransitionOverlay>
+      ) : null}
     </main>
   )
+}
+
+function TurnTransitionOverlay(props: {
+  transition: DuelTransitionSequence
+  onAdvance: () => void
+  onSkip: () => void
+}) {
+  const { phase, presentation } = props.transition
+
+  if (phase === 'actions') {
+    return (
+      <DuelTransitionOverlay
+        eyebrow={`Turn ${presentation.turn}`}
+        primaryActionLabel="Next"
+        secondaryActionLabel="Skip"
+        title="Actions Locked"
+        onAdvance={props.onAdvance}
+        onSecondaryAction={props.onSkip}
+      >
+        <div className="flex flex-wrap justify-center gap-2">
+          {Object.entries(presentation.selections).map(([challengerId, action]) => (
+            <span
+              className="border border-[var(--agni-gold)] px-3 py-1"
+              key={challengerId}
+            >
+              <strong className="text-amber-200">Challenger {challengerId}</strong>:{' '}
+              <strong className={getChallengerActionClass(action)}>
+                {action}
+              </strong>
+            </span>
+          ))}
+        </div>
+      </DuelTransitionOverlay>
+    )
+  }
+
+  if (phase === 'clash') {
+    return (
+      <DuelTransitionOverlay
+        eyebrow={`Turn ${presentation.turn}`}
+        primaryActionLabel="Next"
+        secondaryActionLabel="Skip"
+        title="Clash"
+        onAdvance={props.onAdvance}
+        onSecondaryAction={props.onSkip}
+      >
+        <strong className="text-red-400">The Fire Master</strong> uses{' '}
+        <strong className="text-[var(--agni-gold)]">
+          {presentation.fireMasterAction}
+        </strong>
+        .
+      </DuelTransitionOverlay>
+    )
+  }
+
+  return (
+    <DuelTransitionOverlay
+      eyebrow={`Turn ${presentation.turn}`}
+      primaryActionLabel="Next"
+      secondaryActionLabel="Skip"
+      title="Turn Result"
+      onAdvance={props.onAdvance}
+      onSecondaryAction={props.onSkip}
+    >
+      <ul className="space-y-2">
+        {getTurnEventSummaries(presentation.resolvedGameState.recentEvents).map(
+          (summary, summaryIndex) => <li key={summaryIndex}>{summary}</li>,
+        )}
+      </ul>
+    </DuelTransitionOverlay>
+  )
+}
+
+function getChallengerActionClass(action: ChallengerAction): string {
+  const baseClass = 'font-bold uppercase tracking-wide'
+
+  if (action === 'Strike') {
+    return `${baseClass} text-red-400`
+  }
+
+  if (action === 'Guard') {
+    return `${baseClass} text-sky-400`
+  }
+
+  if (action === 'Charge') {
+    return `${baseClass} text-amber-300`
+  }
+
+  if (action === 'Lightning') {
+    return `${baseClass} text-violet-300`
+  }
+
+  return `${baseClass} text-emerald-300`
+}
+
+function getTurnEventSummaries(events: TurnEvent[]): ReactNode[] {
+  if (events.length === 0) {
+    return ['The combatants hold their ground.']
+  }
+
+  return events.map((event) => {
+    if (event.type === 'damage') {
+      return event.target === 'fireMaster' ? (
+        <>
+          <strong className="text-red-400">The Fire Master</strong> takes{' '}
+          <strong className="text-red-300">{event.amount} damage</strong>.
+        </>
+      ) : (
+        <>
+          <strong className="text-amber-200">
+            Challenger {event.challengerId}
+          </strong>{' '}
+          takes <strong className="text-red-300">{event.amount} damage</strong>.
+        </>
+      )
+    }
+    if (event.type === 'blocked') {
+      return event.target === 'fireMaster' ? (
+        <>
+          <strong className="text-red-400">The Fire Master</strong>{' '}
+          <strong className="text-sky-300">blocks</strong>{' '}
+          <strong className="text-amber-200">
+            Challenger {event.challengerId}
+          </strong>
+          .
+        </>
+      ) : (
+        <>
+          <strong className="text-amber-200">
+            Challenger {event.challengerId}
+          </strong>{' '}
+          <strong className="text-sky-300">blocks the attack</strong>.
+        </>
+      )
+    }
+    if (event.type === 'charge') {
+      return <><strong className="text-amber-200">Challenger {event.challengerId}</strong> charges Lightning.</>
+    }
+    if (event.type === 'recover') {
+      return <><strong className="text-red-400">The Fire Master</strong> recovers <strong className="text-emerald-300">{event.amount} health</strong>.</>
+    }
+    if (event.type === 'readBlocked') {
+      return (
+        <>
+          <strong className="text-red-400">The Fire Master</strong>{' '}
+          <strong className="text-stone-300">cannot be revealed any further</strong>.
+        </>
+      )
+    }
+    return (
+      <>
+        <strong className="text-violet-300">
+          {event.count} upcoming Fire Master move
+          {event.count === 1 ? '' : 's'} revealed
+        </strong>
+        .
+      </>
+    )
+  })
 }
 
 function DuelResultBanner(props: { status: string }) {

@@ -10,6 +10,7 @@ import {
   getActiveChallengers,
   getBackupChallengers,
   getDeadChallengers,
+  getCurrentFireMasterAction,
   parseStoredGameState,
   resolveTurn,
   serializeGameState,
@@ -18,8 +19,16 @@ import type {
   Challenger,
   ChallengerAction,
   ChallengerActionSelections,
+  FireMasterAction,
   GameState,
 } from '../game/agniKaiRules'
+
+export type ResolvedTurnPresentation = {
+  turn: number
+  selections: ChallengerActionSelections
+  fireMasterAction: FireMasterAction
+  resolvedGameState: GameState
+}
 
 type InitialGame = {
   gameState: GameState | null
@@ -34,13 +43,15 @@ type AgniKaiGameViewModelInput = {
   fireMasterHealthMultiplierInput: string
   fireMasterHealthAdditionInput: string
   selectedActions: Partial<ChallengerActionSelections>
+  isOpeningDuel: boolean
   setChallengerInput: (value: string) => void
   setChallengerMaxHealthInput: (value: string) => void
   setFireMasterHealthMultiplierInput: (value: string) => void
   setFireMasterHealthAdditionInput: (value: string) => void
   startGame: () => void
   resetGame: () => void
-  confirmTurn: () => void
+  confirmTurn: () => ResolvedTurnPresentation | null
+  acknowledgeOpeningDuel: () => void
   updateSelectedAction: (
     challengerId: number,
     selectedAction: ChallengerAction,
@@ -60,13 +71,15 @@ export type AgniKaiGameViewModel = {
   backupChallengers: Challenger[]
   deadChallengers: Challenger[]
   isTurnReady: boolean
+  isOpeningDuel: boolean
   setChallengerInput: (value: string) => void
   setChallengerMaxHealthInput: (value: string) => void
   setFireMasterHealthMultiplierInput: (value: string) => void
   setFireMasterHealthAdditionInput: (value: string) => void
   startGame: () => void
   resetGame: () => void
-  confirmTurn: () => void
+  confirmTurn: () => ResolvedTurnPresentation | null
+  acknowledgeOpeningDuel: () => void
   updateSelectedAction: (
     challengerId: number,
     selectedAction: ChallengerAction,
@@ -100,6 +113,7 @@ export function useAgniKaiGame(): AgniKaiGameViewModel {
   const [selectedActions, setSelectedActions] = useState<
     Partial<ChallengerActionSelections>
   >({})
+  const [isOpeningDuel, setIsOpeningDuel] = useState(false)
   const challengerCount = Number(challengerInput)
   const challengerMaxHealth = Number(challengerMaxHealthInput)
   const fireMasterHealthMultiplier = Number(fireMasterHealthMultiplierInput)
@@ -134,6 +148,7 @@ export function useAgniKaiGame(): AgniKaiGameViewModel {
         fireMasterHealthAddition,
       ),
     )
+    setIsOpeningDuel(true)
   }
 
   const resetGame = () => {
@@ -141,6 +156,7 @@ export function useAgniKaiGame(): AgniKaiGameViewModel {
     setGameState(null)
     setStorageWarning(null)
     setSelectedActions({})
+    setIsOpeningDuel(false)
   }
 
   const updateSelectedAction = (
@@ -155,11 +171,22 @@ export function useAgniKaiGame(): AgniKaiGameViewModel {
 
   const confirmTurn = () => {
     if (!gameState || !canResolveTurn(gameState, selectedActions)) {
-      return
+      return null
     }
 
-    setGameState(resolveTurn(gameState, selectedActions))
+    const selections = { ...selectedActions } as ChallengerActionSelections
+    const fireMasterAction = getCurrentFireMasterAction(gameState)
+    const resolvedGameState = resolveTurn(gameState, selections)
+
+    setGameState(resolvedGameState)
     setSelectedActions({})
+
+    return {
+      turn: gameState.turn,
+      selections,
+      fireMasterAction,
+      resolvedGameState,
+    }
   }
 
   return createAgniKaiGameViewModel({
@@ -170,6 +197,7 @@ export function useAgniKaiGame(): AgniKaiGameViewModel {
     fireMasterHealthMultiplierInput,
     fireMasterHealthAdditionInput,
     selectedActions,
+    isOpeningDuel,
     setChallengerInput,
     setChallengerMaxHealthInput,
     setFireMasterHealthMultiplierInput,
@@ -177,6 +205,7 @@ export function useAgniKaiGame(): AgniKaiGameViewModel {
     startGame,
     resetGame,
     confirmTurn,
+    acknowledgeOpeningDuel: () => setIsOpeningDuel(false),
     updateSelectedAction,
   })
 }
@@ -232,6 +261,7 @@ function createAgniKaiGameViewModel(
     isTurnReady: input.gameState
       ? canResolveTurn(input.gameState, input.selectedActions)
       : false,
+    isOpeningDuel: input.isOpeningDuel,
     setChallengerInput: input.setChallengerInput,
     setChallengerMaxHealthInput: input.setChallengerMaxHealthInput,
     setFireMasterHealthMultiplierInput:
@@ -240,6 +270,7 @@ function createAgniKaiGameViewModel(
     startGame: input.startGame,
     resetGame: input.resetGame,
     confirmTurn: input.confirmTurn,
+    acknowledgeOpeningDuel: input.acknowledgeOpeningDuel,
     updateSelectedAction: input.updateSelectedAction,
   }
 }
