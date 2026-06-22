@@ -83,14 +83,14 @@ export function HowToPlayModal(props: HowToPlayModalProps) {
         }
       }}
     >
-      <div className="agni-how-to-play-panel mx-auto flex max-h-[calc(100dvh-1rem)] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-slate-200 bg-white text-slate-950 shadow-2xl sm:max-h-[calc(100dvh-2rem)]">
-        <header className="flex shrink-0 items-start justify-between gap-3 border-b border-slate-200 px-4 py-4 sm:gap-4 sm:px-6 sm:py-5">
+      <div className="agni-how-to-play-panel agni-panel mx-auto flex max-h-[calc(100dvh-1rem)] w-full max-w-2xl flex-col overflow-hidden sm:max-h-[calc(100dvh-2rem)]">
+        <header className="flex shrink-0 items-start justify-between gap-3 border-b-2 border-[var(--agni-rust-dark)] bg-[var(--agni-rust)] px-4 py-4 text-[var(--agni-cream)] sm:gap-4 sm:px-6 sm:py-5">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-red-700">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[var(--agni-gold)]">
               Agni Kai Trial | Duel Prototype
             </p>
             <h2
-              className="mt-2 text-2xl font-bold tracking-normal sm:text-3xl"
+              className="agni-display mt-2 text-2xl sm:text-3xl"
               id="how-to-play-title"
             >
               How to Play
@@ -98,7 +98,7 @@ export function HowToPlayModal(props: HowToPlayModalProps) {
           </div>
           <button
             aria-label="Close how to play"
-            className="rounded-md p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-red-200"
+            className="agni-icon-button p-2"
             type="button"
             onClick={closeModal}
           >
@@ -118,7 +118,7 @@ export function HowToPlayModal(props: HowToPlayModalProps) {
           </button>
         </header>
 
-        <div className="overflow-y-auto px-4 py-5 sm:px-6 sm:py-6">
+        <div className="agni-scrollbar overflow-y-auto px-4 py-5 sm:px-6 sm:py-6">
           <div className="space-y-8">
             <GuideSection title="Objective">
               <p>
@@ -133,7 +133,7 @@ export function HowToPlayModal(props: HowToPlayModalProps) {
                 health, the Fire Master health multiplier, and any bonus health.
                 You can change all four values before starting the duel.
               </p>
-              <p className="mt-3 rounded-md bg-slate-100 px-4 py-3 font-mono text-sm font-semibold text-slate-800">
+              <p className="mt-3 border border-[var(--agni-border)] bg-[var(--agni-cream)] px-4 py-3 text-sm font-semibold text-[var(--agni-ink)]">
                 Fire Master health = (challengers x health each x multiplier) +
                 bonus
               </p>
@@ -234,8 +234,8 @@ type GuideSectionProps = {
 function GuideSection(props: GuideSectionProps) {
   return (
     <section>
-      <h3 className="text-lg font-bold text-slate-950">{props.title}</h3>
-      <div className="mt-3 text-sm leading-6 text-slate-700">
+      <h3 className="agni-display text-lg text-[var(--agni-ink)]">{props.title}</h3>
+      <div className="mt-3 text-sm leading-6 text-[var(--agni-ink-muted)]">
         {props.children}
       </div>
     </section>
@@ -249,8 +249,8 @@ type ActionRuleProps = {
 
 function ActionRule(props: ActionRuleProps) {
   return (
-    <p className="rounded-md border border-slate-200 bg-slate-50 px-4 py-3">
-      <strong className="text-slate-950">{props.name}</strong> -{' '}
+    <p className="border border-[var(--agni-border)] bg-[var(--agni-cream)] px-4 py-3">
+      <strong className="font-semibold uppercase tracking-wide text-[var(--agni-rust-dark)]">{props.name}</strong> -{' '}
       {props.children}
     </p>
   )

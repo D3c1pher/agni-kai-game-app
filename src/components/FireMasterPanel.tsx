@@ -25,13 +25,13 @@ export function FireMasterPanel(props: FireMasterPanelProps) {
 
   return (
     <div
-      className={`rounded-lg border border-red-200 bg-white p-4 shadow-sm ${fireMasterFeedbackClass}`}
+      className={`agni-panel-dark p-4 ${fireMasterFeedbackClass}`}
     >
       <div>
-        <p className="text-sm font-semibold uppercase tracking-wide text-red-700">
+        <p className="agni-kicker">
           Fire Master
         </p>
-        <h2 className="mt-1 text-xl font-bold">AI opponent</h2>
+        <h2 className="agni-display mt-1 text-2xl">AI opponent</h2>
       </div>
       <div className="mt-4">
         <HealthBar
@@ -54,7 +54,7 @@ export function FireMasterPanel(props: FireMasterPanelProps) {
         />
       </dl>
       {revealedCurrentMove ? (
-        <div className="mt-3 rounded-md bg-violet-50 px-4 py-3 text-sm font-semibold text-violet-900">
+        <div className="mt-3 border border-[var(--agni-gold)] bg-[var(--agni-parchment)] px-4 py-3 text-sm font-semibold text-[var(--agni-ink)]">
           Next move: {revealedCurrentMove.action}
         </div>
       ) : null}

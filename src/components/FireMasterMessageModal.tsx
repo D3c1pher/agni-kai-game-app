@@ -78,14 +78,14 @@ export function FireMasterMessageModal(props: FireMasterMessageModalProps) {
         }
       }}
     >
-      <div className="agni-how-to-play-panel mx-auto flex max-h-[calc(100dvh-1rem)] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-slate-200 bg-white text-slate-950 shadow-2xl sm:max-h-[calc(100dvh-2rem)]">
-        <header className="flex shrink-0 items-start justify-between gap-3 border-b border-slate-200 px-4 py-4 sm:gap-4 sm:px-6 sm:py-5">
+      <div className="agni-how-to-play-panel agni-panel mx-auto flex max-h-[calc(100dvh-1rem)] w-full max-w-2xl flex-col overflow-hidden sm:max-h-[calc(100dvh-2rem)]">
+        <header className="flex shrink-0 items-start justify-between gap-3 border-b-2 border-[var(--agni-rust-dark)] bg-[var(--agni-rust)] px-4 py-4 text-[var(--agni-cream)] sm:gap-4 sm:px-6 sm:py-5">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-red-700">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[var(--agni-gold)]">
               A message from your Fire Master
             </p>
             <h2
-              className="mt-2 text-2xl font-bold tracking-normal sm:text-3xl"
+              className="agni-display mt-2 text-2xl sm:text-3xl"
               id="fire-master-message-title"
             >
               Thank You, Campers!
@@ -93,7 +93,7 @@ export function FireMasterMessageModal(props: FireMasterMessageModalProps) {
           </div>
           <button
             aria-label="Close message from the Fire Master"
-            className="rounded-md p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-red-200"
+            className="agni-icon-button p-2"
             type="button"
             onClick={closeModal}
           >
@@ -113,17 +113,17 @@ export function FireMasterMessageModal(props: FireMasterMessageModalProps) {
           </button>
         </header>
 
-        <div className="overflow-y-auto px-4 py-5 sm:px-6 sm:py-6">
-          <div className="space-y-5 text-sm leading-7 text-slate-700 sm:text-base">
+        <div className="agni-scrollbar overflow-y-auto px-4 py-5 sm:px-6 sm:py-6">
+          <div className="space-y-5 text-sm leading-7 text-[var(--agni-ink-muted)] sm:text-base">
             <p>
-              To the <strong className="text-slate-950">Thrive As One Campers</strong>{' '}
+              To the <strong className="text-[var(--agni-ink)]">Thrive As One Campers</strong>{' '}
               who experienced the{' '}
-              <strong className="text-red-700">Agni Kai Trial</strong> during the{' '}
-              <strong className="text-slate-950">Trials of the Elements</strong>{' '}
+              <strong className="text-[var(--agni-rust)]">Agni Kai Trial</strong> during the{' '}
+              <strong className="text-[var(--agni-ink)]">Trials of the Elements</strong>{' '}
               activity:
             </p>
 
-            <p className="text-lg font-bold text-slate-950">Thank you for playing!</p>
+            <p className="agni-display text-lg text-[var(--agni-ink)]">Thank you for playing!</p>
 
             <p>
               It was a joy seeing you face the challenge together with your
@@ -140,30 +140,30 @@ export function FireMasterMessageModal(props: FireMasterMessageModalProps) {
 
             <p>
               Also, shoutout to the{' '}
-              <strong className="text-red-700">Flamethrowers Tribe</strong> for
+              <strong className="text-[var(--agni-rust)]">Flamethrowers Tribe</strong> for
               that dominating win!
             </p>
 
             <p>
               May we continue to{' '}
-              <strong className="text-slate-950">THRIVE AS ONE!</strong>
+              <strong className="text-[var(--agni-ink)]">THRIVE AS ONE!</strong>
             </p>
 
-            <div className="flex flex-col items-start gap-4 border-t border-slate-200 pt-5 sm:flex-row sm:items-center">
+            <div className="flex flex-col items-start gap-4 border-t-2 border-[var(--agni-border)] pt-5 sm:flex-row sm:items-center">
               <img
                 alt="Norven, the Fire Master"
-                className="h-20 w-20 shrink-0 rounded-full border-2 border-red-100 object-cover shadow-sm"
+                className="h-20 w-20 shrink-0 rounded-full border-4 border-[var(--agni-gold)] object-cover shadow-[0_4px_0_var(--agni-rust-dark)]"
                 src={fireMasterAvatar}
               />
-              <p className="leading-6 text-slate-700">
+              <p className="leading-6 text-[var(--agni-ink-muted)]">
                 From Yours Truly,
                 <br />
-                <strong className="text-slate-950">
+                <strong className="text-[var(--agni-ink)]">
                   Norven '<span className="text-[#199efc]">Inspired Weaver</span>'{' '}
                   Caracas
                 </strong>
                 <br />
-                Your Fire Master
+                Your <span className="text-[var(--agni-rust)]">Fire Master</span>
               </p>
             </div>
 
@@ -174,7 +174,7 @@ export function FireMasterMessageModal(props: FireMasterMessageModalProps) {
               </p>
               <p className="flex flex-wrap gap-3 pt-1">
                 <a
-                  className="inline-flex items-center gap-2 rounded-md border border-[#1877f2]/30 px-3 py-2 font-semibold text-[#1877f2] transition hover:bg-[#1877f2]/10 focus:outline-none focus:ring-2 focus:ring-[#1877f2]/40"
+                  className="inline-flex items-center gap-2 border-2 border-[#1877f2] bg-[var(--agni-cream)] px-3 py-2 font-semibold text-[#1877f2] transition hover:bg-[#1877f2]/10 focus:outline-none focus:ring-2 focus:ring-[#1877f2]/40"
                   href="https://www.facebook.com/profile.php?id=61581950243209"
                   rel="noopener noreferrer"
                   target="_blank"
@@ -189,7 +189,7 @@ export function FireMasterMessageModal(props: FireMasterMessageModalProps) {
                   Facebook
                 </a>
                 <a
-                  className="inline-flex items-center gap-2 rounded-md border border-black/30 px-3 py-2 font-semibold text-black transition hover:bg-black/10 focus:outline-none focus:ring-2 focus:ring-black/40"
+                  className="inline-flex items-center gap-2 border-2 border-black bg-[var(--agni-cream)] px-3 py-2 font-semibold text-black transition hover:bg-black/10 focus:outline-none focus:ring-2 focus:ring-black/40"
                   href="https://x.com/InspiredWeaver"
                   rel="noopener noreferrer"
                   target="_blank"

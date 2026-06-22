@@ -14,7 +14,7 @@ export function EventPills(props: EventPillsProps) {
     <div className="mt-3 flex flex-wrap gap-2">
       {props.events.map((event, eventIndex) => (
         <span
-          className={`rounded-full px-2.5 py-1 text-xs font-bold ${getEventPillClass(
+          className={`px-2.5 py-1 text-xs font-semibold uppercase tracking-wide shadow-[0_2px_0_rgba(15,7,4,0.3)] ${getEventPillClass(
             event,
           )}`}
           key={`${event.type}-${eventIndex}`}

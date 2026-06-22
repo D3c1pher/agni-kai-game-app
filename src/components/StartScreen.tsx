@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { FireMasterMessageModal } from './FireMasterMessageModal'
 import { HowToPlayModal } from './HowToPlayModal'
+import { FlameEmblem } from './ui/FlameEmblem'
 
 type StartScreenProps = {
   challengerInput: string
@@ -33,29 +34,32 @@ export function StartScreen(props: StartScreenProps) {
   }
 
   return (
-    <main className="min-h-dvh bg-[#f6f7fb] px-4 py-6 text-slate-950 sm:px-5 sm:py-8">
+    <main className="agni-page min-h-dvh px-4 py-6 sm:px-5 sm:py-8">
       <section className="mx-auto flex min-h-[calc(100dvh-3rem)] max-w-4xl flex-col justify-center sm:min-h-[calc(100dvh-4rem)]">
         <div className="max-w-2xl">
-          <p className="text-sm font-semibold uppercase tracking-wide text-red-700">
-            Duel prototype
-          </p>
-          <h1 className="mt-3 text-4xl font-bold tracking-normal sm:text-6xl">
-            Agni Kai
-          </h1>
-          <p className="mt-4 max-w-xl text-base leading-7 text-slate-700 sm:mt-5 sm:text-lg sm:leading-8">
+          <div className="flex items-center gap-4">
+            <FlameEmblem className="h-16 w-16 shrink-0 drop-shadow-[0_4px_0_#0f0704] sm:h-20 sm:w-20" />
+            <div>
+              <p className="agni-kicker">Duel prototype</p>
+              <h1 className="agni-display mt-2 text-4xl text-[var(--agni-cream)] sm:text-6xl">
+                Agni Kai
+              </h1>
+            </div>
+          </div>
+          <p className="mt-4 max-w-xl text-base leading-7 text-[var(--agni-parchment-muted)] sm:mt-5 sm:text-lg sm:leading-8">
             Initiate a duel against the Fire Master.
           </p>
         </div>
 
-        <div className="mt-7 max-w-xl rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:mt-10 sm:p-6">
+        <div className="agni-panel mt-7 max-w-xl p-4 sm:mt-10 sm:p-6">
           <div className="grid gap-5 sm:grid-cols-2">
             <label
-              className="block text-sm font-semibold text-slate-700"
+              className="block text-sm font-semibold uppercase tracking-wide text-[var(--agni-ink)]"
               htmlFor="challenger-count"
             >
               Total challengers
               <input
-                className="mt-3 w-full rounded-md border border-slate-300 px-4 py-3 text-lg outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                className="agni-input mt-3 w-full px-4 py-3 text-lg"
                 id="challenger-count"
                 min="1"
                 inputMode="numeric"
@@ -68,12 +72,12 @@ export function StartScreen(props: StartScreenProps) {
               />
             </label>
             <label
-              className="block text-sm font-semibold text-slate-700"
+              className="block text-sm font-semibold uppercase tracking-wide text-[var(--agni-ink)]"
               htmlFor="challenger-health"
             >
               Max health each
               <input
-                className="mt-3 w-full rounded-md border border-slate-300 px-4 py-3 text-lg outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                className="agni-input mt-3 w-full px-4 py-3 text-lg"
                 id="challenger-health"
                 min="1"
                 inputMode="numeric"
@@ -86,12 +90,12 @@ export function StartScreen(props: StartScreenProps) {
               />
             </label>
             <label
-              className="block text-sm font-semibold text-slate-700"
+              className="block text-sm font-semibold uppercase tracking-wide text-[var(--agni-ink)]"
               htmlFor="fire-master-multiplier"
             >
               Fire Master multiplier
               <input
-                className="mt-3 w-full rounded-md border border-slate-300 px-4 py-3 text-lg outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                className="agni-input mt-3 w-full px-4 py-3 text-lg"
                 id="fire-master-multiplier"
                 min="0.1"
                 inputMode="decimal"
@@ -107,12 +111,12 @@ export function StartScreen(props: StartScreenProps) {
               />
             </label>
             <label
-              className="block text-sm font-semibold text-slate-700"
+              className="block text-sm font-semibold uppercase tracking-wide text-[var(--agni-ink)]"
               htmlFor="fire-master-addition"
             >
               Fire Master bonus health
               <input
-                className="mt-3 w-full rounded-md border border-slate-300 px-4 py-3 text-lg outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                className="agni-input mt-3 w-full px-4 py-3 text-lg"
                 id="fire-master-addition"
                 min="0"
                 inputMode="numeric"
@@ -128,7 +132,7 @@ export function StartScreen(props: StartScreenProps) {
             </label>
           </div>
           <button
-            className="mt-5 w-full rounded-md bg-red-700 px-4 py-3 text-base font-semibold text-white transition hover:bg-red-800 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500"
+            className="agni-button-primary mt-5 w-full px-4 py-3 text-base"
             disabled={!props.canStartGame}
             type="button"
             onClick={props.onStartGame}
@@ -136,7 +140,7 @@ export function StartScreen(props: StartScreenProps) {
             Play
           </button>
           <button
-            className="mt-3 w-full rounded-md border border-slate-300 bg-white px-4 py-3 text-base font-semibold text-slate-700 transition hover:border-red-300 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-100"
+            className="agni-button-secondary mt-3 w-full px-4 py-3 text-base"
             ref={howToPlayButtonRef}
             type="button"
             onClick={() => setIsHowToPlayOpen(true)}
@@ -144,7 +148,7 @@ export function StartScreen(props: StartScreenProps) {
             How to Play
           </button>
           <button
-            className="mt-3 w-full rounded-md border border-red-200 bg-red-50 px-4 py-3 text-base font-semibold text-red-700 transition hover:border-red-400 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-100"
+            className="agni-button-secondary mt-3 w-full px-4 py-3 text-base"
             ref={fireMasterMessageButtonRef}
             type="button"
             onClick={() => setIsFireMasterMessageOpen(true)}
@@ -152,7 +156,7 @@ export function StartScreen(props: StartScreenProps) {
             Message from the Fire Master
           </button>
           {props.storageWarning ? (
-            <p className="mt-4 text-sm leading-6 text-amber-700">
+            <p className="mt-4 border-l-4 border-[var(--agni-rust)] bg-[rgba(152,47,16,0.1)] px-3 py-2 text-sm leading-6 text-[var(--agni-rust-dark)]">
               {props.storageWarning} Start a new duel to replace it.
             </p>
           ) : null}

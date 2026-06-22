@@ -1,9 +1,26 @@
+@import "@fontsource/oswald/latin-400.css";
+@import "@fontsource/oswald/latin-500.css";
+@import "@fontsource/oswald/latin-600.css";
+@import "@fontsource/trade-winds/latin-400.css";
 @import "tailwindcss";
 
 :root {
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #172033;
-  background: #f5f7fb;
+  --agni-bg: #24160f;
+  --agni-bg-deep: #160c08;
+  --agni-parchment: #fff4d1;
+  --agni-parchment-muted: #f1dca2;
+  --agni-cream: #fff9e6;
+  --agni-ink: #342113;
+  --agni-ink-muted: #765942;
+  --agni-rust: #982f10;
+  --agni-rust-dark: #6a2410;
+  --agni-rust-bright: #b83a12;
+  --agni-gold: #d7a457;
+  --agni-border: #8f4320;
+  --agni-shadow: #0f0704;
+  font-family: "Oswald", system-ui, sans-serif;
+  color: var(--agni-cream);
+  background: var(--agni-bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -14,6 +31,134 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.agni-page {
+  background-color: var(--agni-bg);
+  background-image:
+    radial-gradient(circle at 50% -8rem, rgba(152, 47, 16, 0.42), transparent 35rem),
+    linear-gradient(rgba(244, 199, 108, 0.04) 1px, transparent 1px),
+    linear-gradient(115deg, rgba(77, 38, 12, 0.14), transparent 35%, rgba(90, 43, 10, 0.12));
+  background-size: auto, 100% 2.8rem, auto;
+  color: var(--agni-cream);
+}
+
+.agni-display {
+  font-family: "Trade Winds", fantasy;
+  font-weight: 400;
+}
+
+.agni-kicker {
+  color: var(--agni-gold);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.agni-panel {
+  background-color: var(--agni-parchment);
+  background-image: linear-gradient(rgba(143, 67, 32, 0.055) 1px, transparent 1px);
+  background-size: 100% 2rem;
+  border: 2px solid var(--agni-border);
+  border-radius: 0;
+  box-shadow: 0 5px 0 var(--agni-shadow), 0 12px 24px rgba(0, 0, 0, 0.2);
+  color: var(--agni-ink);
+}
+
+.agni-panel-dark {
+  background:
+    radial-gradient(circle at 50% 120%, rgba(152, 47, 16, 0.36), transparent 55%),
+    var(--agni-bg-deep);
+  border: 2px solid var(--agni-border);
+  border-radius: 0;
+  box-shadow: 0 5px 0 var(--agni-shadow), 0 12px 24px rgba(0, 0, 0, 0.25);
+  color: var(--agni-cream);
+}
+
+.agni-button-primary,
+.agni-button-secondary {
+  border-radius: 0;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.agni-button-primary {
+  background: var(--agni-rust);
+  border: 1px solid #c78659;
+  box-shadow: 0 4px 0 var(--agni-rust-dark);
+  color: var(--agni-cream);
+}
+
+.agni-button-primary:hover:not(:disabled) {
+  background: var(--agni-rust-bright);
+}
+
+.agni-button-primary:active:not(:disabled) {
+  box-shadow: 0 1px 0 var(--agni-rust-dark);
+  transform: translateY(3px);
+}
+
+.agni-button-primary:disabled {
+  background: #c3a987;
+  border-color: #b79a74;
+  box-shadow: none;
+  color: #7b644d;
+  cursor: not-allowed;
+}
+
+.agni-button-secondary {
+  background: transparent;
+  border: 1px solid var(--agni-gold);
+  box-shadow: 0 3px 0 rgba(15, 7, 4, 0.8);
+  color: inherit;
+}
+
+.agni-button-secondary:hover {
+  background: rgba(215, 164, 87, 0.14);
+  border-color: var(--agni-cream);
+}
+
+.agni-button-primary:focus-visible,
+.agni-button-secondary:focus-visible,
+.agni-input:focus-visible,
+.agni-select:focus-visible,
+.agni-icon-button:focus-visible {
+  outline: 3px solid #e6b85f;
+  outline-offset: 3px;
+}
+
+.agni-input,
+.agni-select {
+  background: var(--agni-cream);
+  border: 2px solid var(--agni-border);
+  border-radius: 0;
+  color: var(--agni-ink);
+  outline: none;
+}
+
+.agni-icon-button {
+  border: 1px solid transparent;
+  color: inherit;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.agni-icon-button:hover {
+  background: rgba(152, 47, 16, 0.12);
+  border-color: var(--agni-border);
+}
+
+.agni-scrollbar {
+  scrollbar-color: var(--agni-rust) rgba(143, 67, 32, 0.14);
+  scrollbar-width: thin;
 }
 
 .agni-hit-flash {

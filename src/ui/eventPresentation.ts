@@ -86,24 +86,24 @@ export function getEventLabel(event: TurnEvent): string {
 
 export function getEventPillClass(event: TurnEvent): string {
   if (event.type === 'damage') {
-    return 'bg-red-100 text-red-800'
+    return 'border border-red-800 bg-red-100 text-red-900'
   }
 
   if (event.type === 'blocked') {
-    return 'bg-sky-100 text-sky-800'
+    return 'border border-sky-800 bg-sky-100 text-sky-900'
   }
 
   if (event.type === 'charge') {
-    return 'bg-amber-100 text-amber-800'
+    return 'border border-amber-800 bg-amber-100 text-amber-950'
   }
 
   if (event.type === 'recover') {
-    return 'bg-emerald-100 text-emerald-800'
+    return 'border border-emerald-800 bg-emerald-100 text-emerald-950'
   }
 
   if (event.type === 'readBlocked') {
-    return 'bg-slate-200 text-slate-700'
+    return 'border border-stone-700 bg-stone-200 text-stone-900'
   }
 
-  return 'bg-violet-100 text-violet-800'
+  return 'border border-violet-800 bg-violet-100 text-violet-950'
 }

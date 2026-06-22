@@ -31,21 +31,21 @@ export function ChallengerPanel(props: ChallengerPanelProps) {
 
   return (
     <article
-      className={`rounded-lg border border-slate-200 bg-slate-50 p-3 ${challengerFeedbackClass}`}
+      className={`border border-[var(--agni-border)] bg-[rgba(255,249,230,0.72)] p-3 shadow-[0_3px_0_rgba(106,36,16,0.28)] ${challengerFeedbackClass}`}
     >
       <div className="flex items-start justify-between gap-2">
         <div>
-          <h3 className="text-base font-bold">
+          <h3 className="agni-display text-base">
             Challenger {props.challenger.id}
           </h3>
-          <p className="mt-0.5 text-xs text-slate-600">
+          <p className="mt-0.5 text-xs text-[var(--agni-ink-muted)]">
             {props.challenger.hasLightningCharge
               ? 'Lightning charged'
               : 'No charge ready'}
           </p>
         </div>
         {props.challenger.previousAction ? (
-          <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-600">
+          <span className="border border-[var(--agni-border)] bg-[var(--agni-cream)] px-3 py-1 text-xs font-semibold text-[var(--agni-ink-muted)]">
             Last: {props.challenger.previousAction}
           </span>
         ) : null}
@@ -60,10 +60,10 @@ export function ChallengerPanel(props: ChallengerPanelProps) {
         />
       </div>
 
-      <label className="mt-3 block text-sm font-semibold text-slate-700">
+      <label className="mt-3 block text-sm font-semibold uppercase tracking-wide text-[var(--agni-ink)]">
         Action
         <select
-          className="mt-2 w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+          className="agni-select mt-2 w-full px-3 py-2 text-sm"
           value={selectedAction}
           onChange={(event) =>
             props.onActionChange(
