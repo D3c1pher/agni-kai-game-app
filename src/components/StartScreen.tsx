@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import thriveAsOneYouthMinistryImage from '../assets/thrive-as-one-youth-ministry.jpg'
 import { FireMasterMessageModal } from './FireMasterMessageModal'
 import { HowToPlayModal } from './HowToPlayModal'
 import { FlameEmblem } from './ui/FlameEmblem'
@@ -155,7 +156,7 @@ export function StartScreen(props: StartScreenProps) {
             type="button"
             onClick={() => setIsFireMasterMessageOpen(true)}
           >
-            Message from the Fire Master
+            Message from the <span className="text-[var(--agni-rust)]">Fire Master</span>
           </button>
           {props.storageWarning ? (
             <p className="mt-4 border-l-4 border-[var(--agni-rust)] bg-[rgba(152,47,16,0.1)] px-3 py-2 text-sm leading-6 text-[var(--agni-rust-dark)]">
@@ -165,7 +166,10 @@ export function StartScreen(props: StartScreenProps) {
             </div>
           </div>
 
-          <aside className="agni-panel p-5 sm:p-6 lg:mt-24" aria-labelledby="developer-update-title">
+          <aside
+            className="agni-panel p-5 sm:p-6 lg:flex lg:self-stretch lg:flex-col"
+            aria-labelledby="developer-update-title"
+          >
             <p className="agni-kicker">From the Developer</p>
             <h2
               className="agni-display mt-3 text-3xl text-[var(--agni-rust-dark)]"
@@ -173,7 +177,13 @@ export function StartScreen(props: StartScreenProps) {
             >
               Developer Update
             </h2>
-            <p className="mt-5 text-base leading-7 text-[var(--agni-ink)]">
+            <div className="mt-5 max-h-80 overflow-y-auto pr-2 lg:min-h-0 lg:flex-1 lg:max-h-none">
+              <img
+                alt="Youth Ministry Thrive As One"
+                className="aspect-video w-full border-2 border-[var(--agni-border)] object-cover"
+                src={thriveAsOneYouthMinistryImage}
+              />
+              <p className="mt-5 text-base leading-7 text-[var(--agni-ink)]">
               This game is dedicated to all the <strong>Campers</strong> who joined and participated in the <strong>Thrive As One Youth Ministry Camp</strong>.
 
               <br /><br />
@@ -189,7 +199,8 @@ export function StartScreen(props: StartScreenProps) {
 
               This digital version is a tribute to those moments and to every camper who helped bring the
               trial to life.
-            </p>
+              </p>
+            </div>
           </aside>
         </div>
       </section>
