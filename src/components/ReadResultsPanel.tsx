@@ -9,7 +9,7 @@ type ReadResultsPanelProps = {
 export function ReadResultsPanel(props: ReadResultsPanelProps) {
   return (
     <div
-      className={`flex min-h-0 flex-col rounded-lg border border-slate-200 bg-white p-4 shadow-sm ${props.feedbackClass}`}
+      className={`flex flex-col rounded-lg border border-slate-200 bg-white p-4 shadow-sm xl:min-h-0 ${props.feedbackClass}`}
     >
       <h2 className="text-lg font-bold">Read results</h2>
       {props.hasReadBlocked ? (
@@ -18,7 +18,7 @@ export function ReadResultsPanel(props: ReadResultsPanelProps) {
         </p>
       ) : null}
       {props.revealedMoves.length > 0 ? (
-        <ul className="mt-4 min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain pr-1">
+        <ul className="mt-4 space-y-3 xl:min-h-0 xl:flex-1 xl:overflow-y-auto xl:overscroll-contain xl:pr-1">
           {props.revealedMoves.map((move, moveIndex) => (
             <li
               className="rounded-md bg-amber-50 px-4 py-3 text-sm text-amber-950"

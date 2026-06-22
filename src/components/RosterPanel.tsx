@@ -12,9 +12,9 @@ type RosterGroupProps = {
 
 export function RosterPanel(props: RosterPanelProps) {
   return (
-    <div className="flex min-h-0 flex-col rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+    <div className="flex flex-col rounded-lg border border-slate-200 bg-white p-4 shadow-sm xl:min-h-0">
       <h2 className="text-lg font-bold">Roster</h2>
-      <div className="mt-1 min-h-0 flex-1 overflow-y-auto pr-1">
+      <div className="mt-1 xl:min-h-0 xl:flex-1 xl:overflow-y-auto xl:pr-1">
         <RosterGroup challengers={props.backupChallengers} label="Backup" />
         <RosterGroup challengers={props.deadChallengers} label="Defeated" />
       </div>

@@ -83,14 +83,14 @@ export function HowToPlayModal(props: HowToPlayModalProps) {
         }
       }}
     >
-      <div className="agni-how-to-play-panel mx-auto flex max-h-[calc(100vh-2rem)] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-slate-200 bg-white text-slate-950 shadow-2xl">
-        <header className="flex shrink-0 items-start justify-between gap-4 border-b border-slate-200 px-6 py-5">
+      <div className="agni-how-to-play-panel mx-auto flex max-h-[calc(100dvh-1rem)] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-slate-200 bg-white text-slate-950 shadow-2xl sm:max-h-[calc(100dvh-2rem)]">
+        <header className="flex shrink-0 items-start justify-between gap-3 border-b border-slate-200 px-4 py-4 sm:gap-4 sm:px-6 sm:py-5">
           <div>
             <p className="text-xs font-bold uppercase tracking-widest text-red-700">
               Agni Kai Trial | Duel Prototype
             </p>
             <h2
-              className="mt-2 text-3xl font-bold tracking-normal"
+              className="mt-2 text-2xl font-bold tracking-normal sm:text-3xl"
               id="how-to-play-title"
             >
               How to Play
@@ -118,7 +118,7 @@ export function HowToPlayModal(props: HowToPlayModalProps) {
           </button>
         </header>
 
-        <div className="overflow-y-auto px-6 py-6">
+        <div className="overflow-y-auto px-4 py-5 sm:px-6 sm:py-6">
           <div className="space-y-8">
             <GuideSection title="Objective">
               <p>

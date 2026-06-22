@@ -43,12 +43,18 @@ body {
 .agni-how-to-play-dialog {
   width: 100vw;
   max-width: none;
-  height: 100vh;
+  height: 100dvh;
   max-height: none;
   margin: 0;
   border: 0;
   background: transparent;
-  padding: 1rem;
+  padding: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .agni-how-to-play-dialog {
+    padding: 1rem;
+  }
 }
 
 .agni-how-to-play-dialog[open] .agni-how-to-play-panel {

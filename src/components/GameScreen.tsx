@@ -16,8 +16,8 @@ export function GameScreen(props: GameScreenProps) {
     : ''
 
   return (
-    <main className="h-screen overflow-hidden bg-[#f6f7fb] px-4 py-4 text-slate-950 sm:px-6 lg:px-8">
-      <section className="mx-auto flex h-full max-w-7xl flex-col">
+    <main className="min-h-dvh overflow-x-hidden bg-[#f6f7fb] px-3 py-3 text-slate-950 sm:px-6 sm:py-4 lg:px-8 xl:h-dvh xl:overflow-hidden">
+      <section className="mx-auto flex min-h-[calc(100dvh-1.5rem)] max-w-7xl flex-col sm:min-h-[calc(100dvh-2rem)] xl:h-full xl:min-h-0">
         <header className="flex shrink-0 flex-col gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center sm:justify-between">
           <h1 className="text-3xl font-bold tracking-normal text-slate-950">
             Agni Kai
@@ -40,10 +40,10 @@ export function GameScreen(props: GameScreenProps) {
           status={props.game.gameState.status}
         />
 
-        <section className="mt-3 grid min-h-0 flex-[0_0_45%] gap-3 lg:grid-cols-[1fr_2fr]">
+        <section className="mt-3 grid gap-3 xl:min-h-0 xl:flex-[0_0_45%] xl:grid-cols-[1fr_2fr]">
           <FireMasterPanel gameState={props.game.gameState} />
 
-          <div className="flex min-h-0 flex-col rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="flex flex-col rounded-lg border border-slate-200 bg-white p-4 shadow-sm xl:min-h-0">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">
@@ -52,7 +52,7 @@ export function GameScreen(props: GameScreenProps) {
                 <h2 className="mt-1 text-xl font-bold">Choose each action</h2>
               </div>
               <button
-                className="rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500"
+                className="w-full rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 md:w-auto"
                 disabled={!props.game.isTurnReady}
                 type="button"
                 onClick={props.game.confirmTurn}
@@ -61,7 +61,7 @@ export function GameScreen(props: GameScreenProps) {
               </button>
             </div>
 
-            <div className="mt-3 grid min-h-0 flex-1 gap-3 xl:grid-cols-3">
+            <div className="mt-3 grid gap-3 md:grid-cols-2 xl:min-h-0 xl:flex-1 xl:grid-cols-3">
               {props.game.activeChallengers.map((challenger) => (
                 <ChallengerPanel
                   challenger={challenger}
@@ -81,7 +81,7 @@ export function GameScreen(props: GameScreenProps) {
           </div>
         </section>
 
-        <section className="mt-3 grid min-h-0 flex-1 gap-3 lg:grid-cols-3">
+        <section className="mt-3 grid gap-3 md:grid-cols-3 xl:min-h-0 xl:flex-1">
           <RosterPanel
             backupChallengers={props.game.backupChallengers}
             deadChallengers={props.game.deadChallengers}

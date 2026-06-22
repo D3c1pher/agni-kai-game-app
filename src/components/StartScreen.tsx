@@ -33,21 +33,21 @@ export function StartScreen(props: StartScreenProps) {
   }
 
   return (
-    <main className="min-h-screen bg-[#f6f7fb] px-5 py-8 text-slate-950">
-      <section className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-4xl flex-col justify-center">
+    <main className="min-h-dvh bg-[#f6f7fb] px-4 py-6 text-slate-950 sm:px-5 sm:py-8">
+      <section className="mx-auto flex min-h-[calc(100dvh-3rem)] max-w-4xl flex-col justify-center sm:min-h-[calc(100dvh-4rem)]">
         <div className="max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-wide text-red-700">
             Duel prototype
           </p>
-          <h1 className="mt-3 text-5xl font-bold tracking-normal sm:text-6xl">
+          <h1 className="mt-3 text-4xl font-bold tracking-normal sm:text-6xl">
             Agni Kai
           </h1>
-          <p className="mt-5 max-w-xl text-lg leading-8 text-slate-700">
+          <p className="mt-4 max-w-xl text-base leading-7 text-slate-700 sm:mt-5 sm:text-lg sm:leading-8">
             Initiate a duel against the Fire Master.
           </p>
         </div>
 
-        <div className="mt-10 max-w-xl rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="mt-7 max-w-xl rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:mt-10 sm:p-6">
           <div className="grid gap-5 sm:grid-cols-2">
             <label
               className="block text-sm font-semibold text-slate-700"
@@ -136,20 +136,20 @@ export function StartScreen(props: StartScreenProps) {
             Play
           </button>
           <button
-            className="mt-3 w-full rounded-md border border-red-200 bg-red-50 px-4 py-3 text-base font-semibold text-red-700 transition hover:border-red-400 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-100"
-            ref={fireMasterMessageButtonRef}
-            type="button"
-            onClick={() => setIsFireMasterMessageOpen(true)}
-          >
-            Message from the Fire Master
-          </button>
-          <button
             className="mt-3 w-full rounded-md border border-slate-300 bg-white px-4 py-3 text-base font-semibold text-slate-700 transition hover:border-red-300 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-100"
             ref={howToPlayButtonRef}
             type="button"
             onClick={() => setIsHowToPlayOpen(true)}
           >
             How to Play
+          </button>
+          <button
+            className="mt-3 w-full rounded-md border border-red-200 bg-red-50 px-4 py-3 text-base font-semibold text-red-700 transition hover:border-red-400 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-100"
+            ref={fireMasterMessageButtonRef}
+            type="button"
+            onClick={() => setIsFireMasterMessageOpen(true)}
+          >
+            Message from the Fire Master
           </button>
           {props.storageWarning ? (
             <p className="mt-4 text-sm leading-6 text-amber-700">

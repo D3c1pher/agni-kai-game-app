@@ -78,14 +78,14 @@ export function FireMasterMessageModal(props: FireMasterMessageModalProps) {
         }
       }}
     >
-      <div className="agni-how-to-play-panel mx-auto flex max-h-[calc(100vh-2rem)] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-slate-200 bg-white text-slate-950 shadow-2xl">
-        <header className="flex shrink-0 items-start justify-between gap-4 border-b border-slate-200 px-6 py-5">
+      <div className="agni-how-to-play-panel mx-auto flex max-h-[calc(100dvh-1rem)] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-slate-200 bg-white text-slate-950 shadow-2xl sm:max-h-[calc(100dvh-2rem)]">
+        <header className="flex shrink-0 items-start justify-between gap-3 border-b border-slate-200 px-4 py-4 sm:gap-4 sm:px-6 sm:py-5">
           <div>
             <p className="text-xs font-bold uppercase tracking-widest text-red-700">
               A message from your Fire Master
             </p>
             <h2
-              className="mt-2 text-3xl font-bold tracking-normal"
+              className="mt-2 text-2xl font-bold tracking-normal sm:text-3xl"
               id="fire-master-message-title"
             >
               Thank You, Campers!
@@ -113,7 +113,7 @@ export function FireMasterMessageModal(props: FireMasterMessageModalProps) {
           </button>
         </header>
 
-        <div className="overflow-y-auto px-6 py-6">
+        <div className="overflow-y-auto px-4 py-5 sm:px-6 sm:py-6">
           <div className="space-y-5 text-sm leading-7 text-slate-700 sm:text-base">
             <p>
               To the <strong className="text-slate-950">Thrive As One Campers</strong>{' '}
@@ -149,7 +149,7 @@ export function FireMasterMessageModal(props: FireMasterMessageModalProps) {
               <strong className="text-slate-950">THRIVE AS ONE!</strong>
             </p>
 
-            <div className="flex items-center gap-4 border-t border-slate-200 pt-5">
+            <div className="flex flex-col items-start gap-4 border-t border-slate-200 pt-5 sm:flex-row sm:items-center">
               <img
                 alt="Norven, the Fire Master"
                 className="h-20 w-20 shrink-0 rounded-full border-2 border-red-100 object-cover shadow-sm"
