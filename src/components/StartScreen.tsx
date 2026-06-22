@@ -174,8 +174,21 @@ export function StartScreen(props: StartScreenProps) {
               Developer Update
             </h2>
             <p className="mt-5 text-base leading-7 text-[var(--agni-ink)]">
-              This game is dedicated to all the Campers who joined and participated in the
-              Thrive As One YM Camp.
+              This game is dedicated to all the <strong>Campers</strong> who joined and participated in the <strong>Thrive As One Youth Ministry Camp</strong>.
+
+              <br /><br />
+
+              The <strong className="text-[var(--agni-rust)]">Agni Kai Trial</strong> was one of the station games featured during the <strong>Trial of the Elements — Amazing Race</strong>, and is one of the games I had the privilege of designing and facilitating.
+
+              <br /><br />
+
+              As my <strong>first time serving in camp</strong> and helping create activities for such an event,
+              seeing the enthusiasm, teamwork, and determination of campers made the experience truly memorable.
+
+              <br /><br />
+
+              This digital version is a tribute to those moments and to every camper who helped bring the
+              trial to life.
             </p>
           </aside>
         </div>
