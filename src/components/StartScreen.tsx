@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { FireMasterMessageModal } from './FireMasterMessageModal'
 import { HowToPlayModal } from './HowToPlayModal'
 
 type StartScreenProps = {
@@ -16,8 +17,15 @@ type StartScreenProps = {
 }
 
 export function StartScreen(props: StartScreenProps) {
+  const [isFireMasterMessageOpen, setIsFireMasterMessageOpen] = useState(true)
   const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false)
+  const fireMasterMessageButtonRef = useRef<HTMLButtonElement>(null)
   const howToPlayButtonRef = useRef<HTMLButtonElement>(null)
+
+  function closeFireMasterMessage() {
+    setIsFireMasterMessageOpen(false)
+    window.setTimeout(() => fireMasterMessageButtonRef.current?.focus(), 0)
+  }
 
   function closeHowToPlay() {
     setIsHowToPlayOpen(false)
@@ -35,8 +43,7 @@ export function StartScreen(props: StartScreenProps) {
             Agni Kai
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-8 text-slate-700">
-            Set the total challengers, then test the turn-by-turn duel against
-            the Fire Master.
+            Initiate a duel against the Fire Master.
           </p>
         </div>
 
@@ -129,6 +136,14 @@ export function StartScreen(props: StartScreenProps) {
             Play
           </button>
           <button
+            className="mt-3 w-full rounded-md border border-red-200 bg-red-50 px-4 py-3 text-base font-semibold text-red-700 transition hover:border-red-400 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-100"
+            ref={fireMasterMessageButtonRef}
+            type="button"
+            onClick={() => setIsFireMasterMessageOpen(true)}
+          >
+            Message from the Fire Master
+          </button>
+          <button
             className="mt-3 w-full rounded-md border border-slate-300 bg-white px-4 py-3 text-base font-semibold text-slate-700 transition hover:border-red-300 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-100"
             ref={howToPlayButtonRef}
             type="button"
@@ -143,6 +158,9 @@ export function StartScreen(props: StartScreenProps) {
           ) : null}
         </div>
       </section>
+      {isFireMasterMessageOpen ? (
+        <FireMasterMessageModal onClose={closeFireMasterMessage} />
+      ) : null}
       {isHowToPlayOpen ? (
         <HowToPlayModal onClose={closeHowToPlay} />
       ) : null}
